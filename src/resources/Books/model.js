@@ -33,14 +33,29 @@ const Book = () => {
      RETURNING *;
    `;
 
-    db.query(sql, [title, author, genre]).then((result) => {
-      callback(result.rows[0]);
-    });
+    db.query(sql, [title, author, genre])
+      .then((result) => {
+        callback(result.rows[0]);
+      })
+      .catch(console.error);
   };
 
+  // Get all books
+  const getAllBooks = (callback) => {
+    const sql = `
+   SELECT * FROM books;
+   `;
+
+    db.query(sql)
+      .then((result) => {
+        callback(result.rows);
+      })
+      .catch(console.error);
+  };
   createBookTable();
   return {
     createABook,
+    getAllBooks,
   };
 };
 
