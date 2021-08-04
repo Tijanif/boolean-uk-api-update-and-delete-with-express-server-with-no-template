@@ -20,7 +20,28 @@ const Book = () => {
       .catch(console.error);
   };
 
+  // Add One Book
+  const createABook = (newBook, callback) => {
+    const { title, author, genre } = newBook;
+    const sql = `
+    INSERT INTO books(
+     title,
+     author,
+     genre
+    )
+    VALUES ($1, $2, $3)
+     RETURNING *;
+   `;
+
+    db.query(sql, [title, author, genre]).then((result) => {
+      callback(result.rows[0]);
+    });
+  };
+
   createBookTable();
+  return {
+    createABook,
+  };
 };
 
 module.exports = Book;
