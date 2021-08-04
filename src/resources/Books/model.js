@@ -52,10 +52,26 @@ const Book = () => {
       })
       .catch(console.error);
   };
+
+  // Find one book
+  const getOneBook = (id, callback) => {
+    const sql = `
+    SELECT * FROM books
+    WHERE id = $1;
+    `;
+
+    db.query(sql, [id])
+      .then((result) => {
+        callback(result.rows);
+      })
+      .catch(console.error);
+  };
+
   createBookTable();
   return {
     createABook,
     getAllBooks,
+    getOneBook,
   };
 };
 

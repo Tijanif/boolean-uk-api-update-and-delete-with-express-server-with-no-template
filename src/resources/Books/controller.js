@@ -1,6 +1,6 @@
 const Book = require('./model');
 
-const { createABook, getAllBooks } = Book();
+const { createABook, getAllBooks, getOneBook } = Book();
 
 // Create a book
 const createOneBook = (req, res) => {
@@ -18,7 +18,16 @@ const getAll = (req, res) => {
   });
 };
 
+// Get One Book
+const getOne = (req, res) => {
+  const id = req.params.id;
+  getOneBook(id, (book) => {
+    res.json({ Found: book });
+  });
+};
+
 module.exports = {
   createOneBook,
   getAll,
+  getOne,
 };
