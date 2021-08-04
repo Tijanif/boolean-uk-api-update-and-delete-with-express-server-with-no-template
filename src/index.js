@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const Book = require('./resources/Books/model');
 const db = require('./utilities/database');
 
 const app = express();
@@ -10,6 +11,10 @@ app.use(express.json());
 
 // Routes
 
+app.get('*', (req, res) => {
+  res.json({ ok: true });
+});
+
 // Listen to server
 app.listen(4000, () => {
   db.connect((error) => {
@@ -17,6 +22,8 @@ app.listen(4000, () => {
       console.error('[ERROR] Connection error: ', error.stack);
     } else {
       console.log('\n[DB] Connected....\n');
+
+      Book();
     }
   });
 
