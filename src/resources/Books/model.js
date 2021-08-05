@@ -68,29 +68,8 @@ const Book = () => {
   };
 
   // Patch a book
-  async function updateABook(id, newBookData) {
+  function updateABook(id, newBookData) {
     // find current book to update
-    const currentBook = await getOneBook(id);
-
-    const newBook = { ...currentBook, ...newBookData };
-
-    const sql = `
-    UPDATE books
-    SET title = $1, author = $2, genre = $3
-    WHERE id = $1
-    RETURNING *;
-   `;
-
-    try {
-      const result = await db.query(sql, [
-        newBook.title,
-        newBook.author,
-        newBook.genre,
-      ]);
-      return result.rows[0];
-    } catch (error) {
-      console.error(error);
-    }
   }
   createBookTable();
   return {
